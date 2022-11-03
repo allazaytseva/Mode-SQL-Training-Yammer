@@ -80,7 +80,7 @@ ORDER BY
 
 We can check this hypothesis by comparing the engagement rate over time in different countries. Since holidays are different across countries, there's a possibility that one or two countries would show a drop while the others would stay the same. 
 
-On Mode, you can easily visualize your findings with a Tableau-like program. However, for my hypothesis, I needed to compare the engagement rate over time in 47 countries side by side. In my opinion, the easiest way to do that is to create a quick and simple visualization in RStudio. 
+On Mode, you can easily visualize your findings with a Tableau-like program. However, for my hypothesis, I needed to compare the engagement rate over time in 47 countries side by side. In my opinion, the easiest way to do that is to create a quick and simple visualization in RStudio. I queried my data first and then exported it into RStudio. 
 
 As we see in the facet wrap chart below, the line goes down drastically for engagement in the US. However, we can't accept our hypothesis simply because the US has a lot more users in general, and therefore the line would show a bigger drop. If you look closely at other countries  with many users (Germany, Australia, Brazil, France etc), you'll see a drop among all of them in the same place on the timeline – August. Therefore, we are not accepting the hypothesis about the engagement drop because of vacation/holiday. 
 
@@ -101,6 +101,20 @@ ORDER BY
   2,
   3 DESC
   
+ ```
+ 
+ ```r
+ install.packages('tidyverse')
+library(tidyverse)
+str(yammer_countries)
+head(yammer_countries)
+
+install.packages('ggplot2')
+library(ggplot2)
+
+ggplot(yammer_countries, aes(x=date_trunc, y=user_count))+
+  geom_line()+
+  facet_wrap(~location)
  ```
  
  ![Screen Shot 2022-11-03 at 12 48 13 PM](https://user-images.githubusercontent.com/95102899/199819890-9e73852b-2cc2-4fa0-ba80-e5f8132cff68.png)
