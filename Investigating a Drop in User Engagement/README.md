@@ -42,3 +42,68 @@ Now, let's dig into our tables and see what they look like.
 **Rollup period table** 
 
 ![Screen Shot 2022-10-24 at 4 10 19 PM](https://user-images.githubusercontent.com/95102899/197646926-dbea3e91-e683-4ef1-86cc-3870ff5f2d76.png)
+
+
+### 3. Checking hypotheses. 
+
+**Let's first check the growth rate.** 
+
+```sql
+
+SELECT 
+  DATE_TRUNC('day', created_at) AS day,
+  COUNT (*) AS all_users,
+  COUNT (
+    CASE 
+      WHEN activated_at IS NOT NULL THEN user_id
+      ELSE NULL 
+    END
+  ) AS activated_users
+FROM 
+  tutorial.yammer_users
+WHERE 
+  created_at >= '2014-05-01'
+  AND created_at < '2014-09-01'
+GROUP BY 
+  1
+ORDER BY 
+  1
+  
+  ```
+  
+  As we see from the chart below, the growth rate didn't change – users are active during weekdays and are not so active during weekends. 
+  
+  ![Screen Shot 2022-11-03 at 12 40 50 PM](https://user-images.githubusercontent.com/95102899/199818980-5541ca8f-14f8-4530-be88-f786936b0bdd.png)
+  
+  
+**Vacation/Holiday**
+
+We can check this hypothesis by comparing the engagement rate over time in different countries. Since holidays are different across countries, there's a possibility that one or two countries would show a drop while the others would stay the same. 
+
+On Mode, you can easily visualize your findings with a Tableau-like program. However, for my hypothesis, I needed to compare the engagement rate over time in 47 countries side by side. In my opinion, the easiest way to do that is to create a quick and simple visualization in RStudio. 
+
+As we see in the facet wrap chart below, the line goes down drastically for engagement in the US. However, we can't accept our hypothesis simply because the US has a lot more users in general, and therefore the line would show a bigger drop. If you look closely at other countries  with many users (Germany, Australia, Brazil, France etc), you'll see a drop among all of them in the same place on the timeline – August. Therefore, we are not accepting the hypothesis about the engagement drop because of vacation/holiday. 
+
+```sql
+SELECT
+  location,
+  DATE_TRUNC('week', occurred_at),
+  COUNT (DISTINCT user_id) AS user_count
+FROM
+  tutorial.yammer_events
+WHERE
+  event_type = 'engagement'
+  AND event_name = 'login'
+GROUP BY
+  location,
+  2
+ORDER BY
+  2,
+  3 DESC
+  
+ ```
+ 
+ ![Screen Shot 2022-11-03 at 12 48 13 PM](https://user-images.githubusercontent.com/95102899/199819890-9e73852b-2cc2-4fa0-ba80-e5f8132cff68.png)
+
+ 
+  
