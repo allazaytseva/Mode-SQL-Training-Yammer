@@ -118,6 +118,8 @@ ggplot(yammer_countries, aes(x=date_trunc, y=user_count))+
  ```
  
  ![Screen Shot 2022-11-03 at 12 48 13 PM](https://user-images.githubusercontent.com/95102899/199819890-9e73852b-2cc2-4fa0-ba80-e5f8132cff68.png)
+ 
+ Next, I will check other possible reasons for the drop in user engagement. 
 
  
   
