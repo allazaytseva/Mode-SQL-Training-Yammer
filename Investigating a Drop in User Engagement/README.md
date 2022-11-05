@@ -18,9 +18,9 @@ You are responsible for determining what caused the dip at the end of the chart 
 
 Let's first come up with a list of possible causes for the dip in retention shown in the chart above. After that, I will check every hypothesis one by one and query my data to accept or deny the hypothesis. 
 
+- Growth rate went down 
 - People went on vacation in the end of July + August 
-- Long weekend/ Holidays (could be combined with the first hypothesis)
-- Lay-offs
+- Long weekend/ Holidays (could be combined with the vacation hypothesis)
 - Broken tracking system
 - Broken website/app
 
@@ -123,5 +123,18 @@ ggplot(yammer_countries, aes(x=date_trunc, y=user_count))+
  
  **Therefore, we are not accepting the hypothesis about the engagement drop because of vacation/holiday.**
 
+#### Type of Device.
+
+ Let's check if the drop in engagement happened on all devices at the same time or if it happened only on one device. To do that, we will first check what type of devices the users log in on and engage from. 
+
+```sql
+SELECT DISTINCT device
+FROM tutorial.yammer_events
+```
+![Screen Shot 2022-11-05 at 4 07 22 PM](https://user-images.githubusercontent.com/95102899/200145043-fe32aa83-19ed-4bf3-90a2-9f3157d495ae.png)
+
+Now, I will go ahead and classify all devices into 3 categories: *phone, computer, and tablet.* I will have to google some of the devices if the names are unfamiliar. I will use these classifications in my analysis. 
+
+
+
  
-  
