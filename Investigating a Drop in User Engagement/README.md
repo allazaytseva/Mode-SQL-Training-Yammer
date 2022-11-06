@@ -135,6 +135,68 @@ FROM tutorial.yammer_events
 
 Now, I will go ahead and classify all devices into 3 categories: *phone, computer, and tablet.* I will have to google some of the devices if the names are unfamiliar. I will use these classifications in my analysis. 
 
-
+```sql
+SELECT
+  DATE_TRUNC('week', occurred_at) AS week,
+  COUNT (DISTINCT user_id) AS user_count,
+  COUNT (
+    DISTINCT CASE
+      WHEN device IN (
+        'dell inspiron desktop',
+        'macbook pro',
+        'asus chromebook',
+        'macbook air',
+        'mac mini',
+        'lenovo thinkpad',
+        'acer aspire notebook',
+        'acer aspire desktop',
+        'dell inspiron notebook',
+        'hp pavilion desktop'
+      ) THEN user_id
+      ELSE NULL
+    END
+  ) AS computer,
+  COUNT (
+    DISTINCT CASE
+      WHEN device IN (
+        'nexus 10',
+        'ipad mini',
+        'samsumg galaxy tablet',
+        'kindle fire',
+        'ipad air',
+        'nexus 7',
+        'windows surface'
+      ) THEN user_id
+      ELSE NULL
+    END
+  ) AS tablet,
+  COUNT(
+    DISTINCT CASE
+      WHEN device IN (
+        'iphone 5',
+        'amazon fire phone',
+        'iphone 5s',
+        'iphone 4s',
+        'nexus 5',
+        'htc one',
+        'samsung galaxy note',
+        'nokia lumia 635',
+        'samsung galaxy s4'
+      ) THEN user_id
+      ELSE NULL
+    END
+  ) AS phone
+FROM
+  tutorial.yammer_events
+WHERE
+  event_type = 'engagement'
+  AND event_name = 'login'
+GROUP BY
+  1
+ORDER BY
+  1
+LIMIT
+  200
+  ```
 
  
