@@ -199,5 +199,8 @@ LIMIT
   200
   ```
   
+![Screen Shot 2022-11-07 at 2 33 58 PM](https://user-images.githubusercontent.com/95102899/200429857-71df8d12-a75a-44ad-982c-72727ca24107.png)
+
+After visualizing the results of our SQL-query, we see that there's a dip in engagement rate on users' phones. 
 
  
