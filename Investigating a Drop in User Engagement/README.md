@@ -259,7 +259,7 @@ Here's the visualization of our results:
 ![Screen Shot 2022-11-07 at 4 17 03 PM](https://user-images.githubusercontent.com/95102899/200444921-b9cfb2b3-89ac-4ede-b0be-be0ca32f27a6.png)
 
 
-In the screenshot we see how different age cohorts are distributed. Something interesting in this graph is the same life cycle these cohorts go through: they get activated and then they engage less and less every week. We can see this tendency both among the old users and the new ones. Checl out these two screenshots: 
+In the screenshot above, we see how different age cohorts are distributed. Something interesting in this graph is the same life cycle these cohorts go through: they get activated and then they engage less and less every week. We can see this tendency both among the old users and the new ones. Checl out these two screenshots: 
 
 ![Screen Shot 2022-11-07 at 4 17 36 PM](https://user-images.githubusercontent.com/95102899/200445223-4b3895d6-485a-4682-aaba-3e517ee4708f.png)
 
