@@ -201,6 +201,9 @@ LIMIT
   
 ![Screen Shot 2022-11-07 at 2 33 58 PM](https://user-images.githubusercontent.com/95102899/200429857-71df8d12-a75a-44ad-982c-72727ca24107.png)
 
-After visualizing the results of our SQL-query, we see that there's a dip in engagement rate on users' phones. 
+After visualizing the results of our SQL-query, we see that there's a dip in engagement rate on users' phones. Next step here would be to report these findings to the Product Manager and ask the engineer team whether there have been any changes in the product. 
+
+#### Engagement among new and existing users 
+The Mode team has also suggested to check how the engagement rate is different among existing and new users. We are going to check that and see if the drop in engagement could be tracked to how long users have been using the product. 
 
  
