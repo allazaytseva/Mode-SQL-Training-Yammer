@@ -206,4 +206,62 @@ After visualizing the results of our SQL-query, we see that there's a dip in eng
 #### Engagement among new and existing users 
 The Mode team has also suggested to check how the engagement rate is different among existing and new users. We are going to check that and see if the drop in engagement could be tracked to how long users have been using the product. 
 
+In our query, we are going to subtract the activation date from the last day of the tracking period to see how many weeks have passed since the user was activated. After that, we will classufy all users based on how many weeks they have been activated from less than a week up to 14+ weeks. We will group our results by week to find out their weekly engagement. 
+
+```sql
+With z AS
+(SELECT e.occurred_at,
+               u.user_id,
+               DATE_TRUNC('week',u.activated_at) AS activation_week,
+               EXTRACT('day' FROM e.occurred_at - u.activated_at) AS age_at_event,
+               EXTRACT('day' FROM '2014-09-01'::TIMESTAMP - u.activated_at) AS user_age,
+               m.action
+          FROM tutorial.yammer_users u
+          JOIN tutorial.yammer_events e
+            ON e.user_id = u.user_id
+          JOIN tutorial.yammer_emails m
+          ON u.user_id = m.user_id
+           AND e.event_type = 'engagement'
+          AND e.event_name = 'login'
+           AND e.occurred_at >= '2014-05-01'
+           AND e.occurred_at < '2014-09-01'
+         WHERE u.activated_at IS NOT NULL)
+
+
+SELECT DATE_TRUNC('week',z.occurred_at) AS week,
+       AVG(z.age_at_event) AS "Average age during week",
+       COUNT (DISTINCT CASE WHEN z.user_age >= 98 THEN z.user_id ELSE NULL END) AS "14+ weeks",
+       COUNT (DISTINCT CASE WHEN z.user_age < 98 AND z.user_age >= 91 THEN z.user_id ELSE NULL END ) AS "13 weeks",
+       COUNT (DISTINCT CASE WHEN z.user_age < 91 AND z.user_age >= 84 THEN z.user_id ELSE NULL END) AS "12 weeks",
+       COUNT (DISTINCT CASE WHEN z.user_age <84 AND z.user_age >= 77 THEN z.user_id ELSE NULL END) AS "11 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 77 AND z.user_age >= 70 THEN z.user_id ELSE NULL END) AS "10 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 70 AND z.user_age >= 63 THEN z.user_id ELSE NULL END) AS "9 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 63 AND z.user_age >= 56 THEN z.user_id ELSE NULL END) AS "8 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 56 AND z.user_age >= 49 THEN z.user_id ELSE NULL END) AS "7 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 49 AND z.user_age >= 42 THEN z.user_id ELSE NULL END) AS "6 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 42 AND z.user_age >= 35 THEN z.user_id ELSE NULL END) AS "5 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 35 AND z.user_age >= 28 THEN z.user_id ELSE NULL END) AS "4 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 28 AND z.user_age >= 21 THEN z.user_id ELSE NULL END) AS "3 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 21 AND z.user_age >= 14 THEN z.user_id ELSE NULL END) AS "2 weeks",
+       COUNT(DISTINCT CASE WHEN z.user_age < 14 AND z.user_age >= 7 THEN z.user_id ELSE NULL END) AS "1 week",
+       COUNT(DISTINCT CASE WHEN z.user_age < 7 THEN z.user_id ELSE NULL END) AS "Less than a week"
+  FROM z
  
+GROUP BY 1 
+ORDER BY 1
+LIMIT 100
+
+```
+
+Here's the visualization of our results: 
+
+
+![Screen Shot 2022-11-07 at 4 17 03 PM](https://user-images.githubusercontent.com/95102899/200444921-b9cfb2b3-89ac-4ede-b0be-be0ca32f27a6.png)
+
+
+In the screenshot we see how different age cohorts are distributed. Something interesting in this graph is the same life cycle these cohorts go through: they get activated and then they engage less and less every week. We can see this tendency both among the old users and the new ones. Checl out these two screenshots: 
+
+![Screen Shot 2022-11-07 at 4 17 36 PM](https://user-images.githubusercontent.com/95102899/200445223-4b3895d6-485a-4682-aaba-3e517ee4708f.png)
+
+![Screen Shot 2022-11-07 at 4 18 16 PM](https://user-images.githubusercontent.com/95102899/200445240-cf0cc564-dc0e-4f16-aa3f-d7db33497655.png)
+
