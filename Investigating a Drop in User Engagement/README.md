@@ -216,16 +216,16 @@ With z AS
                EXTRACT('day' FROM e.occurred_at - u.activated_at) AS age_at_event,
                EXTRACT('day' FROM '2014-09-01'::TIMESTAMP - u.activated_at) AS user_age,
                m.action
-          FROM tutorial.yammer_users u
-          JOIN tutorial.yammer_events e
-            ON e.user_id = u.user_id
-          JOIN tutorial.yammer_emails m
-          ON u.user_id = m.user_id
-           AND e.event_type = 'engagement'
-          AND e.event_name = 'login'
-           AND e.occurred_at >= '2014-05-01'
-           AND e.occurred_at < '2014-09-01'
-         WHERE u.activated_at IS NOT NULL)
+FROM tutorial.yammer_users u
+      JOIN tutorial.yammer_events e
+      ON e.user_id = u.user_id
+      JOIN tutorial.yammer_emails m
+      ON u.user_id = m.user_id
+      AND e.event_type = 'engagement'
+      AND e.event_name = 'login'
+      AND e.occurred_at >= '2014-05-01'
+      AND e.occurred_at < '2014-09-01'
+WHERE u.activated_at IS NOT NULL)
 
 
 SELECT DATE_TRUNC('week',z.occurred_at) AS week,
@@ -245,7 +245,7 @@ SELECT DATE_TRUNC('week',z.occurred_at) AS week,
        COUNT(DISTINCT CASE WHEN z.user_age < 21 AND z.user_age >= 14 THEN z.user_id ELSE NULL END) AS "2 weeks",
        COUNT(DISTINCT CASE WHEN z.user_age < 14 AND z.user_age >= 7 THEN z.user_id ELSE NULL END) AS "1 week",
        COUNT(DISTINCT CASE WHEN z.user_age < 7 THEN z.user_id ELSE NULL END) AS "Less than a week"
-  FROM z
+FROM z
  
 GROUP BY 1 
 ORDER BY 1
