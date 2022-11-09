@@ -218,9 +218,7 @@ With z AS
                m.action
 FROM tutorial.yammer_users u
       JOIN tutorial.yammer_events e
-      ON e.user_id = u.user_id
-      JOIN tutorial.yammer_emails m
-      ON u.user_id = m.user_id
+      ON e.user_id = u.user_id        
       AND e.event_type = 'engagement'
       AND e.event_name = 'login'
       AND e.occurred_at >= '2014-05-01'
