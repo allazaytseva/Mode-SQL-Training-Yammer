@@ -263,3 +263,9 @@ In the screenshot above, we see how different age cohorts are distributed. Somet
 
 ![Screen Shot 2022-11-07 at 4 18 16 PM](https://user-images.githubusercontent.com/95102899/200445240-cf0cc564-dc0e-4f16-aa3f-d7db33497655.png)
 
+
+TLDR: 
+We investigated a drop in user engagement at Yammer – a social network for communicating with coworkers. First we asked questions and made hypotheses for the possible dip in engagement: holidays/vacation, overall growth rate drop, change in a product/bug, possible change in how users interact with the product. After that I evaluated these hypothese one by one: if the reason was vacation/holidays then we would most likely see a drop only in one-two countries (the chart showed a change in every country); the overall growth rate stayed the same; the analysis of different age cohorts interacting with the product (based on the login information) didn't indicate an unusual pattern in the engagement rate; however, we saw a dip in user engagement on their phones (compared to computers and tablets). 
+
+Recommendations: Our analysis didn't show clearly what exactly was the reason for the user drop in engagement. However, the fact that there was a change in how users interacted with the product through different platforms might indicate there was a product change/bug. At this point we would notify the Product Manager about the possible reasons for the drop.
+
